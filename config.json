@@ -1,3 +1,7 @@
 {
-	"navitia_token": ""
+	"navitia" : {
+		"token": "",
+		"coverage": "fr-idf",
+		"network": "network%3AOIF%3A439"
+	}
 }

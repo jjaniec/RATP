@@ -6,7 +6,7 @@
   "author": "Joffrey Janiec <jjaniec@student.42.fr>",
   "license": "MIT",
   "scripts": {
-    "init": "node src/init.js"
+    "start": "node src/index.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
