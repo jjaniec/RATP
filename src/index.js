@@ -1,5 +1,4 @@
 const fs = require('fs')
-const json = require('json')
 const path = require('path')
 const config = require('../config')
 const navitia = require('./classes/navitia').default
@@ -19,7 +18,9 @@ const main = async () => {
 	}
 	else
 	{
-		await fs.readFile(path.join(__dirname, '/stops.json'), "utf-8", (err, data) => {
+		await fs.readFile('./stops.json', "utf-8", (err, data) => {
+			if (err)
+				throw new Error(err)
 			client.stops = JSON.parse(data)
 		})
 	}
@@ -30,7 +31,7 @@ const main = async () => {
 	}
 
 //	2.3193711;48.8963911
-	client.getClosestStop(2.315392, 48.895295)
+	//client.getClosestStop(2.315392, 48.895295)
 }
 
 main()

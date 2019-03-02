@@ -43,6 +43,7 @@ module.exports.default = class navitia {
 			this.stopsPages = await Promise.all(Array(1).fill(0).map((val, index) => this.getStopsPage(index)))
 			this.stops = Object.assign(...this.stopsPages);
 			//console.log(this.stops)
+			//fs.writeFileSync('./stops.json', JSON.stringify(this.stops, null, 4), 'utf-8')
 			return this.stops;
 		} catch (e) {
 			console.error(e)
@@ -78,7 +79,7 @@ module.exports.default = class navitia {
 	async getRoutes() {
 		return axios.get(`/v1/coverage/${this.coverage}/networks/${this.network}/routes?count=32&depth=3`)
 		.then(resp => {
-			console.log(resp.data)
+			//console.log(resp.data)
 			return resp.data
 		})
 		.catch(err => {

@@ -6,10 +6,12 @@
   "author": "Joffrey Janiec <jjaniec@student.42.fr>",
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10"
   }
 }
