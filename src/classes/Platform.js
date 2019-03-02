@@ -10,10 +10,11 @@ module.exports.Platform = class Platform {
 			let existing_platform = Platform.platformlist.filter((val) => {
 				return val.name == this.name && val.line.name != this.line.name
 			});
-		//	console.log(existing_platform);
+			//console.log(existing_platform);
 			//if (existing_platform.length > 0)
 			return existing_platform;
 		}
+		
 }
 
 module.exports.Platform.platformlist = [];
