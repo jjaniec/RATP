@@ -22,13 +22,24 @@ const main = async () => {
 		{
 			newPlatform = new Platform(station.name, newLine);
 			newGraph.addNode(newPlatform);	
-			if (!!oldPlatform)
+			if (!!oldPlatform) {
 				newGraph.addEdge(oldPlatform, newPlatform);
+			}
 			newGraph.addEdgeBetweenSameStation(newPlatform, newPlatform.getSameStationDifferentLine())
 			oldPlatform = newPlatform;
 		}
 	}	
-	console.log(newGraph.printGraph());
+	newGraph.printGraph();
+	console.log("\nShortest Path")
+	/*
+	let bercy = newPlatform.getPlatformThroughName("Bercy", "Saint-Lazare - Olympiades")
+	let lyon = newPlatform.getPlatformThroughName("Gare de Lyon", "Saint-Lazare - Olympiades")
+	newGraph.shortestPath(lyon, bercy);
+	*/
+	let bercy = newPlatform.getPlatformThroughName("Bercy", "Olympiades - Saint-Lazare")
+	//let lyon = newPlatform.getPlatformThroughName("Gare de Lyon", "Olympiades - Saint-Lazare")
+	let nation = newPlatform.getPlatformThroughName("Nation", "La Défense (Grande Arche) - Château de Vincennes")
+	newGraph.shortestPath(bercy, nation);
 }
 
 main()
