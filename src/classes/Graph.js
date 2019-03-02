@@ -38,11 +38,11 @@ class Graph{
 				var dstVal = srcVal.get(dstKey)
 				//console.log(dstVal);
 //				str += dstKey.name + ":" + dstVal.line + " " +  "\n origin : " + dstVal.origin.name + "\n";
-				str += "destination : " + dstKey.name + ": line nbr : " + dstVal.line.number + " " +  "\n";
+				str += "\tdestination : " + dstKey.name + ": line nbr : " + dstKey.line.number + " line name : " + dstKey.line.name +  "\n";
 				//str += dstKey.name + ":" + dstVal.line + " " +  "\n";
 			//	str += dstKey.name + ":" + dstVal.line + " " +  "\n";
 			}
-			or = "source : " + srcKey.name + ": line nbr : " + srcKey.line.number + " " + " -> " + str;
+			or = "source : " + srcKey.name + ": line nbr : " + srcKey.line.number + " line name : " + srcKey.line.name + " -> "+  "\n" + str + "\n";
 			//if (!fs.existsSync('./output.json'))
 			fs.appendFileSync('./output.json', or);
 			console.log(srcKey.name + " -> " + str)
