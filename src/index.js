@@ -38,8 +38,8 @@ const main = async () => {
 	*/
 	let bercy = newPlatform.getPlatformThroughName("Bercy", "Olympiades - Saint-Lazare")
 	//let lyon = newPlatform.getPlatformThroughName("Gare de Lyon", "Olympiades - Saint-Lazare")
-	let nation = newPlatform.getPlatformThroughName("Nation", "La Défense (Grande Arche) - Château de Vincennes")
-	newGraph.shortestPath(bercy, nation);
+	let avron = newPlatform.getPlatformThroughName("Avron", "Nation - Porte Dauphine (Maréchal de Lattre de Tassigny)")
+	newGraph.shortestPath(bercy, avron);
 }
 
 main()
