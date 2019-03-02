@@ -23,7 +23,7 @@ module.exports.default = class navitia {
 			return resp.data;
 		})
 		.catch(err => {
-			throw new Error('Failed to fetch lines', err);
+			throw new Error(err);
 		})
 	}
 
@@ -33,7 +33,7 @@ module.exports.default = class navitia {
 			return (resp.data)
 		})
 		.catch(async err => {
-			throw new Error('Failed to fetch stops', err.response);
+			throw new Error(err.response);
 		})
 	}
 
@@ -50,29 +50,27 @@ module.exports.default = class navitia {
 		}
 	}
 
-	async getClosestStop(lon, lat) {
-		return axios.get(`/v1/coverage/${this.coverage}/coord/${lon}%3B${lat}/places_nearby?count=5&type%5B%5D=stop_point&`)
+	async getClosestStop(lon, lat, searchcount = 50) {
+		let rslt = []
+		let tmp = null;
+
+		return axios.get(`/v1/coverage/${this.coverage}/coord/${lon}%3B${lat}/places_nearby?count=${searchcount}&type%5B%5D=stop_point&`)
 		.then(resp => {
 			for (var i = 0; i < resp.data.places_nearby.length; i++) {
 				console.log(`i : ${i} - name: |${resp.data.places_nearby[i].name}|`)
-				if (resp.data.places_nearby[i].name === "Porte de Clichy (Paris)") // -> A remplacer par un foreach
-				{
-					tmp = this.stops.stop_points.filter(item => {
-						console.log(item.label)
-						console.log(resp.data.places_nearby[i].name)
-						if (item.label == resp.data.places_nearby[i].name)
-						{
-							console.log("Success")
-						}
-						return item.label == resp.data.places_nearby[i].name
-					})
-					return tmp
-				}
+				tmp = this.stops.stop_points.filter(item => 
+					(item.name == resp.data.places_nearby[i].name || item.label == resp.data.places_nearby[i].name)
+				)
+				if (tmp && tmp[0] && !(rslt.includes(tmp[0])))
+					rslt.push(tmp[0])
 			}
-			return null;
+			rslt.forEach((item) => {
+				console.log(item.name)
+			})
+			return rslt;
 		})
 		.catch(err => {
-			throw new Error('Failed to fetch closest metro station', err);
+			throw new Error(err);
 		})
 	}
 
@@ -83,7 +81,7 @@ module.exports.default = class navitia {
 			return resp.data
 		})
 		.catch(err => {
-			throw new Error('Failed to fetch routes', err);
+			throw new Error(err);
 		})
 	}
 }

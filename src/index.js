@@ -30,8 +30,12 @@ const main = async () => {
 		fs.writeFileSync('./routes.json', JSON.stringify(routes, null, 4), 'utf-8')
 	}
 
-//	2.3193711;48.8963911
-	//client.getClosestStop(2.315392, 48.895295)
+	await client.getClosestStop(2.3193711, 48.8963911) //  Near 42, Should be Porte de Clichy
+	await client.getClosestStop(2.327338, 48.892463) //-> Guy Moquet
+	await client.getClosestStop(2.346268, 48.881973) //-> Anvers / barbes
+	await client.getClosestStop(2.363010, 48.840200) //-> St Marcel / Austerlitz
+	await client.getClosestStop(2.338908, 48.820278, 150) //-> 
+	await client.getClosestStop(2.328655, 48.822187, 150) //-> Port d'orleans
 }
 
 main()
