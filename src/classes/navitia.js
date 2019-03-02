@@ -14,6 +14,7 @@ module.exports.default = class navitia {
 		this.stops = {
 		};
 		this.stopsPages = null
+		this.schedules = null
 	}
 
 	getLines() {
@@ -79,6 +80,18 @@ module.exports.default = class navitia {
 		.then(resp => {
 			//console.log(resp.data)
 			return resp.data
+		})
+		.catch(err => {
+			throw new Error(err);
+		})
+	}
+
+	async getSchedules(datetime = "20190306T090000") {
+		return axios.get(`/v1/coverage/${this.coverage}/physical_modes/physical_mode%3AMetro/routes//route_schedules?from_datetime=${datetime}&duration=600&count=32&`)
+		.then(resp => {
+//			console.log(resp.data)
+			this.schedules = resp.data
+			return resp.data;
 		})
 		.catch(err => {
 			throw new Error(err);
