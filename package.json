@@ -7,13 +7,38 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "build": "rm -rf src/web/bundle.js && webpack -d -p --mode=production",
+    "webdev": "concurrently \"webpack-dev-server --inline --hot --mode=development\" \"nodemon src/server.js\""
   },
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "@material-ui/lab": "^3.0.0-alpha.30",
     "axios": "^0.18.0",
     "express": "^4.16.4",
     "fs": "^0.0.1-security",
     "moment": "^2.24.0",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-loader": "^8.0.5",
+    "concurrently": "^4.1.0",
+    "css-loader": "^2.1.0",
+    "gulp-sass": "^4.0.2",
+    "nodemon": "^1.18.9",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
   }
 }
