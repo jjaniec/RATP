@@ -7,12 +7,14 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "json": "node src/getJson.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.4",
     "moment": "^2.24.0",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "priorityqueue": "^0.2.1"
   }
 }

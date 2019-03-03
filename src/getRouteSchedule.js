@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-module.exports.default = (client, directionName, fromStationName, toStationName) => {
+module.exports.default = (client, lineNumber, directionName, fromStationName, toStationName) => {
 	let fromStation = client.stops.stop_points.filter(item => 
 		(item.name == fromStationName)
 	)
@@ -9,9 +9,18 @@ module.exports.default = (client, directionName, fromStationName, toStationName)
 	)
 
 	// Get line index in route_schedules array
-	let directionIndex = client.schedules.route_schedules.map(e => e.display_informations.direction).indexOf(directionName)
+	let directionTab = client.schedules.route_schedules.map(e => [e.display_informations.direction, e.display_informations.code])
+	let directionIndex = directionTab.findIndex((e) => {
+		return (e[0] == directionName && e[1] == lineNumber)
+	})
+	console.log(directionTab)
+	console.log(directionIndex)
+	console.log([directionName, lineNumber])
+	//	console.log(client.schedules.route_schedules.map(e => e.display_informations.direction))
 	if (directionIndex == -1)
 		return null;
+	//console.log(`fromstation Number : ${lineNumber} - ${fromStationName}: ${fromStationRow} - tostation ${toStationName}: ${toStationRow} - directionIndex: ${directionIndex} name: ${directionName} `)
+
 
 	//remove empty elements
 	let rows = client.schedules.route_schedules[directionIndex].table.rows.filter((e) => {
@@ -23,6 +32,11 @@ module.exports.default = (client, directionName, fromStationName, toStationName)
 	// Find row of stations
 	let fromStationRow = rows.map((e) => e.stop_point.name).indexOf(fromStationName)
 	let toStationRow = rows.map((e) => e.stop_point.name).indexOf(toStationName)
+	if (fromStationRow == -1 || toStationRow == -1)
+	{
+		//console.log(directionName, fromStationName, toStationName)
+		console.log(`fromstation Number : ${lineNumber} - ${fromStationName}: ${fromStationRow} - tostation ${toStationName}: ${toStationRow} - directionIndex: ${directionIndex} name: ${directionName} `)
+	}
 
 	// make average of all travel times
 	let time = 0;
@@ -32,9 +46,10 @@ module.exports.default = (client, directionName, fromStationName, toStationName)
 		let a = moment(rows[fromStationRow].date_times[metroIndex].date_time)
 		let b = moment(rows[toStationRow].date_times[metroIndex].date_time)
 		let diff = moment((parseInt(a.format('mm')) < parseInt(b.format('mm'))) ? (b.diff(a)) : (a.diff(b))).format('mm')
-		console.log(diff)
+		//console.log(diff)
 		time += parseInt(diff)
 	}
 	time = time / rows[fromStationRow].date_times.length;
 	console.log(time)
+	return time
 }
