@@ -30,7 +30,6 @@ class Graph{
 	}
 	
 	printGraph() {
-		console.log("aslkdj");
 		let or;
 		var srcKeys = this.edges.keys();
 		fs.writeFileSync('./output', "");

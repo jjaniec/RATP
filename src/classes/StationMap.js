@@ -15,12 +15,10 @@ class StationMap {
 	}
 	findStationByName(name)
 	{
-		//this.edges.geddt(name
-		let stations = this.edges.keys();
-		for (let station of stations)
-		{
-			if (station.name == name)
-				return this.edges.get(station);
+		for (let [key, val] of this.edges) {
+			if (key.name == name) {
+				return val;
+			}
 		}
 	}
 	printStationMap()
