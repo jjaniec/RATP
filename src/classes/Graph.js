@@ -76,7 +76,7 @@ class Graph{
 			}
 		}
 		//dst = this.removeDuplicateFromStartAndEnd(dst)
-		this.printPath(dst)
+		console.log(this.createJsonPath(dst))
 	}
 	removeDuplicateFromStartAndEnd(dst){
 		let curr = dst
@@ -101,9 +101,24 @@ class Graph{
 			this.printPath(dst.prev)
 		console.log(dst.name, "(" + dst.cost + ")", "\n\tline:", dst.line.number, dst.line.name)
 	}
-
-
-
+	createObject(curr) {
+		let obj = new Object()
+		obj.station = curr.name
+		obj.lineNumber = curr.line.number
+		obj.lineName = curr.line.name
+		obj.time = curr.cost
+		return obj
+	}
+	createJsonPath(dst) {
+		let jsonPath = []
+		let curr = dst
+		while (curr) {
+			let obj = this.createObject(curr)
+			jsonPath.unshift(obj)
+			curr = curr.prev
+		}
+		return jsonPath
+	}
 }
 
 module.exports = Graph;

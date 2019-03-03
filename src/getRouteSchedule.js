@@ -13,9 +13,9 @@ module.exports.default = (client, lineNumber, directionName, fromStationName, to
 	let directionIndex = directionTab.findIndex((e) => {
 		return (e[0] == directionName && e[1] == lineNumber)
 	})
-	console.log(directionTab)
-	console.log(directionIndex)
-	console.log([directionName, lineNumber])
+	//console.log(directionTab)
+	//console.log(directionIndex)
+	//console.log([directionName, lineNumber])
 	//	console.log(client.schedules.route_schedules.map(e => e.display_informations.direction))
 	if (directionIndex == -1)
 		return default_value;
@@ -48,6 +48,6 @@ module.exports.default = (client, lineNumber, directionName, fromStationName, to
 		time += parseInt(diff)
 	}
 	time = time / rows[fromStationRow].date_times.length;
-	console.log(time)
+	//console.log(time)
 	return time
 }
