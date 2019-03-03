@@ -1,4 +1,4 @@
-const x = require("../routes");
+let x;
 const fs = require("fs");
 
 function line7() {
@@ -78,19 +78,25 @@ function line13() {
 	// for (let index in copyChatToStDenis.stop_points){
 		// console.log(copyChatToStDenis.stop_points[index].name)
 	// }	
+	x.routes.push(copyChatToStDenis)
+	x.routes.push(copyChatToAsniere)
+	x.routes.push(copyAsniereToChat)
+	x.routes.push(copyStDenisToChat)
 }
  module.exports.editJson = async () => {
- 	console.log("1");
+	 console.log("1");
+	 x = require("../routes");
 	line7()
 
 	line13()
 	// 32 OK
-	console.log(x.routes[33].name);
-	console.log(x.routes[33].stop_points.map(stop => console.log(stop.name)));
+	//console.log(x.routes[33].name);
+	//console.log(x.routes[33].stop_points.map(stop => console.log(stop.name)));
 	//console.log(x.routes[15]);
 	x.routes.splice(29, 1)
 	x.routes.splice(28, 1)
 	x.routes.splice(15, 1)
 	x.routes.splice(14, 1)
 	fs.writeFileSync('./routes.json', JSON.stringify(x, null, 4), 'utf-8')
+	return x;
 }

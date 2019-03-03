@@ -76,7 +76,7 @@ class Graph{
 				opened.push(node)
 			}
 		}
-		console.log(this.createJsonPath(dst))
+		return this.createJsonPath(dst);
 	}
 	printPath(dst) {
 		if (dst.prev)
