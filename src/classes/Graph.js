@@ -1,4 +1,5 @@
 const Route = require("./Route");
+const moment = require("moment")
 const fs	= require("fs");
 const PriorityQueue = require("priorityqueue")
 
@@ -84,21 +85,24 @@ class Graph{
 	}
 	createJsonPath(dst) {
 		let jsonPath = []
+		let time = moment()
 		let curr = dst
 		while (curr) {
-			let obj = this.createObject(curr)
+			let obj = this.createObject(curr, time)
 			jsonPath.unshift(obj)
 			curr = curr.prev
 		}
 		this.removeDuplicateStartEnd(jsonPath)
 		return jsonPath
 	}
-	createObject(curr) {
+	createObject(curr, startTime) {
 		let obj = new Object()
 		obj.station = curr.name
 		obj.lineNumber = curr.line.number
 		obj.lineName = curr.line.name
-		obj.time = curr.cost
+		let now = moment(startTime)
+		now.add(curr.cost, 'm');
+		obj.time = now.format("HH:mm")
 		return obj
 	}
 	removeDuplicateStartEnd(jsonPath) {
