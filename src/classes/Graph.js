@@ -75,39 +75,12 @@ class Graph{
 				opened.push(node)
 			}
 		}
-		//dst = this.removeDuplicateFromStartAndEnd(dst)
 		console.log(this.createJsonPath(dst))
-	}
-	removeDuplicateFromStartAndEnd(dst){
-		let curr = dst
-		let end = true;
-		let start = true;
-		while (curr.prev && end) {
-			if (curr.prev.cost == curr.cost && curr.prev.name == curr.name)
-				dst = curr.prev;
-			else
-				end = false
-			curr = curr.prev
-		}
-		while (curr && start) {
-			if (curr.prev.cost == curr.cost && curr.prev.name == curr.name)
-				curr.prev = null
-			curr = curr.prev
-		}
-		return (dst);
 	}
 	printPath(dst) {
 		if (dst.prev)
 			this.printPath(dst.prev)
 		console.log(dst.name, "(" + dst.cost + ")", "\n\tline:", dst.line.number, dst.line.name)
-	}
-	createObject(curr) {
-		let obj = new Object()
-		obj.station = curr.name
-		obj.lineNumber = curr.line.number
-		obj.lineName = curr.line.name
-		obj.time = curr.cost
-		return obj
 	}
 	createJsonPath(dst) {
 		let jsonPath = []
@@ -117,7 +90,24 @@ class Graph{
 			jsonPath.unshift(obj)
 			curr = curr.prev
 		}
+		this.removeDuplicateStartEnd(jsonPath)
 		return jsonPath
+	}
+	createObject(curr) {
+		let obj = new Object()
+		obj.station = curr.name
+		obj.lineNumber = curr.line.number
+		obj.lineName = curr.line.name
+		obj.time = curr.cost
+		return obj
+	}
+	removeDuplicateStartEnd(jsonPath) {
+		while (jsonPath.length >= 2 && jsonPath[0].station == jsonPath[1].station) {
+			jsonPath.shift()
+		}
+		while (jsonPath.length >= 2 && jsonPath[jsonPath.length - 1].station == jsonPath[jsonPath.length - 2].station) {
+			jsonPath.pop()
+		}
 	}
 }
 
