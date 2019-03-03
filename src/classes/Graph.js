@@ -75,7 +75,7 @@ class Graph{
 				opened.push(node)
 			}
 		}
-		dst = this.removeDuplicateFromStartAndEnd(dst)
+		//dst = this.removeDuplicateFromStartAndEnd(dst)
 		this.printPath(dst)
 	}
 	removeDuplicateFromStartAndEnd(dst){

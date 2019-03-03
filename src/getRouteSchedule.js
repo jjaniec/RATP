@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-module.exports.default = (client, lineNumber, directionName, fromStationName, toStationName) => {
+module.exports.default = (client, lineNumber, directionName, fromStationName, toStationName, default_value = 2) => {
 	let fromStation = client.stops.stop_points.filter(item => 
 		(item.name == fromStationName)
 	)
@@ -32,11 +32,9 @@ module.exports.default = (client, lineNumber, directionName, fromStationName, to
 	// Find row of stations
 	let fromStationRow = rows.map((e) => e.stop_point.name).indexOf(fromStationName)
 	let toStationRow = rows.map((e) => e.stop_point.name).indexOf(toStationName)
-	if (fromStationRow == -1 || toStationRow == -1)
-	{
-		//console.log(directionName, fromStationName, toStationName)
-		console.log(`fromstation Number : ${lineNumber} - ${fromStationName}: ${fromStationRow} - tostation ${toStationName}: ${toStationRow} - directionIndex: ${directionIndex} name: ${directionName} `)
-	}
+
+	if (toStationRow == -1 || fromStationRow == -1)
+		return default_value
 
 	// make average of all travel times
 	let time = 0;
