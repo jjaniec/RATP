@@ -100,6 +100,7 @@ class Graph{
 		obj.station = curr.name
 		obj.lineNumber = curr.line.number
 		obj.lineName = curr.line.name
+		obj.lineColor = curr.line.color;
 		let now = moment(startTime)
 		now.add(curr.cost, 'm');
 		obj.time = now.format("HH:mm")
