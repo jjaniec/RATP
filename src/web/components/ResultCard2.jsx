@@ -32,7 +32,7 @@ class NestedList extends React.Component {
 		super()
 		this.state = {
 		  open: true,
-		  data: [
+		  steps: [
 			  {
 				  station: "St 223lazare",
 				  lineNumber: 1,
@@ -47,7 +47,7 @@ class NestedList extends React.Component {
 			  },
 			  {
 				  station: "St ldawdawazare",
-				  lineNumber: 15,
+				  lineNumber: "15",
 				  lineName: "St dawdenis",
 				  time: "20:00"
 			  }
@@ -60,29 +60,43 @@ class NestedList extends React.Component {
     this.setState(state => ({ open: !state.open }));
   };
 
-  componentWillMount() {
-	let start = document.querySelector('#step1').value
-	let end = document.querySelector('#step2').value
+	componentDidMount() {
+		let start = document.querySelector('#step1').value
+		let end = document.querySelector('#step2').value
 
-	console.log(`Req ${start} - ${end}`)
+		console.log(`Req ${start} - ${end}`)
 
-	axios.get(`/path/${start}/${end}`)
-	.then(resp => {
-		console.log(resp.data)
-//		this.state.steps = [{label: "lol"}, {label: 'lal'}]
-		this.state.steps = JSON.parse(resp.data)
-	})
-	.catch(err => {
-		console.log('lol c pa bien')
-		console.log(err.response)
-	})
+		axios.post(`/path`, {
+			start: start,
+			end: end
+		})
+		.then(resp => {
+			console.log(resp.data)
+			let x = resp.data
+			this.setState({
+				steps: x
+			})
+			console.log(this.state.steps)
+		})
+		.catch(err => {
+			console.log(err)
+			console.log(err.response)
+			this.setState({
+				steps: [
+					{
+						station: "Something bad happened",
+						lineNumber: "666",
+						lineName: "",
+						time: ""
+					}
+				]
+			})
+		})
+	}
 
-
-  }
-
-  fmtItem = (item) => {
-	  return `${item.lineNumber} @ ${item.station}, ${item.time}, Direction: ${item.lineName}`
-  }
+  	fmtItem(item) {
+		return `${item.lineNumber} @ ${item.station}, ${item.time}, Direction: ${item.lineName}`
+  	}
 
   render() {
     const { classes } = this.props;
@@ -94,7 +108,7 @@ class NestedList extends React.Component {
         className={classes.root}
       >
 	  {
-		this.state.data.map((item, index) => 
+		this.state.steps.map((item, index) => 
 			<ListItem key={item.time} button>
 				<ListItemIcon>
 					<SendIcon />
