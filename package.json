@@ -9,7 +9,8 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "build": "rm -rf src/web/bundle.js && webpack -d -p --mode=production",
-    "webdev": "concurrently \"webpack-dev-server --inline --hot --mode=development\" \"nodemon src/server.js\""
+    "webdev": "concurrently \"webpack-dev-server --inline --hot --mode=development\" \"nodemon src/server.js\"",
+    "json": "node src/getJson.js"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.2",
@@ -21,7 +22,8 @@
     "moment": "^2.24.0",
     "nodemon": "^1.18.10",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.7.0",
+    "priorityqueue": "^0.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

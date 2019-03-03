@@ -1,5 +1,10 @@
 config.json
 
+lines.json
+routes.json
+stops.json
+schedules.json
+
 # Logs
 logs
 *.log

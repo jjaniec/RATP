@@ -1,21 +1,40 @@
 const fs = require('fs')
 const path = require('path')
 
-const config = require('../config')
-const navitia = require('./classes/navitia').default
-
-const getRouteSchedule = require('./getRouteSchedule').default
-const loadDatafile = require('./loadDataFile').default
+const client = require('./Client')
 
 const main = async () => {
-	let client = new navitia()
+	await client.init(client.client)
 
-	client.lines = await loadDatafile('./lines.json', client.getLines.bind(client))
-	client.stops = await loadDatafile('./stops.json', client.getStops.bind(client))
-	client.routes = await loadDatafile('./routes.json', client.getRoutes)
-	client.schedules = await loadDatafile('./schedules.json', client.getSchedules)
+	const config = require('../config')
+	const Graphs = require("./createGraphs");
+	const Graph = require("./classes/Graph");
 
-	getRouteSchedule(client, 'Château de Vincennes (Paris)', 'Château de Vincennes', 'La Défense (Grande Arche)')
+	let newgraph = await Graphs.main(); 
+	newgraph.graph.printGraph();
+	newgraph.stations.printStationMap();
+	let start = "Saint-Lazare";
+	let end = "Nation";
+	let stationStart = newgraph.stations.findStationByName(start);
+	let stationEnd = newgraph.stations.findStationByName(end);
+
+	for (let [size, stationPlatform] of stationStart) {
+		let graphPlatform = newgraph.graph.edges.get(stationPlatform)
+		for (let [node, route] of graphPlatform) {
+			if (route.origin.name == route.dest.name) {
+				route.cost = 0;
+			}
+		}
+	}
+	for (let [size, stationPlatform] of stationEnd) {
+		let graphPlatform = newgraph.graph.edges.get(stationPlatform)
+		for (let [node, route] of graphPlatform) {
+			if (route.origin.name == route.dest.name) {
+				route.cost = 0;
+			}
+		}
+	}
+
 	/*
 	await client.getClosestStop(2.3193711, 48.8963911) //  Near 42, Should be Porte de Clichy
 	await client.getClosestStop(2.327338, 48.892463) //-> Guy Moquet
@@ -24,6 +43,9 @@ const main = async () => {
 	await client.getClosestStop(2.338908, 48.820278, 150) //-> 
 	await client.getClosestStop(2.328655, 48.822187, 150) //-> Port d'orleans
 	*/
+	newgraph.graph.shortestPath(stationStart.get(0), stationEnd.get(0));
+	//getRouteSchedule(client.client, 'Château de Vincennes (Paris)', 'Château de Vincennes', 'La Défense (Grande Arche)')
+
 }
 
 main()

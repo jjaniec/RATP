@@ -23,8 +23,11 @@ module.exports.default = class navitia {
 		this.schedules = null
 	}
 
-	getLines() {
-		return axios.get(`/v1/coverage/${this.coverage}/physical_modes/physical_mode%3AMetro/lines//?q=&`)
+	async getLines() {
+		//return axios.get(`/v1/coverage/${this.coverage}/physical_modes/physical_mode%3AMetro/lines//?q=&`)
+		//return axios.get(`/v1/coverage/${this.coverage}/lines`)
+		return axios.get(`/v1/coverage/fr-idf/physical_modes/physical_mode%3AMetro/lines/line:OIF:100110013:13OIF439/?`)
+		//return axios.get(`/v1/coverage/fr-idf/lines/M6`)
 		.then(resp => {
 			this.lines = resp.data
 			return resp.data;
