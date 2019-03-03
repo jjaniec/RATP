@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import 'babel-polyfill';
+import Search from 'components/Search'
+
+import AppBar from 'components/AppBar'
+import Stepper from 'components/Stepper'
 
 console.log('Its working');
 
@@ -13,7 +17,12 @@ class App extends Component {
 	}
 
 	render() {
-		return <h1>slt</h1>
+		return (
+			<div id="app">
+				<AppBar />
+				<Stepper />
+			</div>
+		)
 	}
 }
 

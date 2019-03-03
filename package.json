@@ -21,9 +21,10 @@
     "fs": "^0.0.1-security",
     "moment": "^2.24.0",
     "nodemon": "^1.18.10",
+    "priorityqueue": "^0.2.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "priorityqueue": "^0.2.1"
+    "react-select": "^2.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -31,9 +32,9 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
     "babel-plugin-transform-regenerator": "^6.26.0",
     "babel-polyfill": "^6.26.0",
-    "babel-loader": "^8.0.5",
     "concurrently": "^4.1.0",
     "css-loader": "^2.1.0",
     "gulp-sass": "^4.0.2",
