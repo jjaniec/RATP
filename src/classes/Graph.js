@@ -5,19 +5,19 @@ class Graph{
 		this.edges = new Map()
 	}
 
-	addNode(station) {
-		//console.log("graph", this.edges.get(station));
-		if (this.edges.get(station) == null)
-			this.edges.set(station, new Map())
+	addNode(platform) {
+		if (this.edges.get(platform) == null)
+			this.edges.set(platform, new Map())
 		else
 			console.log("slkefjskfjwlefjelfkjselfjeslfjksflkjsf");
 	}
 	addEdgeBetweenSameStation(origin_platform, allSameStation){
 		if (allSameStation.length > 0)
 		{
-			for (let plaftform of allSameStation)
+			for (let platform of allSameStation)
 			{
-				this.edges.get(origin_platform).set(plaftform, new Route(origin_platform, plaftform));
+				this.edges.get(origin_platform).set(platform, new Route(origin_platform, platform));
+				this.edges.get(platform).set(origin_platform, new Route(platform, origin_platform));
 			}
 		}
 	}
@@ -26,9 +26,10 @@ class Graph{
 	}
 	
 	printGraph() {
+		console.log("aslkdj");
 		let or;
 		var srcKeys = this.edges.keys();
-		fs.writeFileSync('./output.json', "");
+		fs.writeFileSync('./output', "");
 		for (var srcKey of srcKeys) {
 			or = "";
 			var srcVal = this.edges.get(srcKey)
@@ -36,33 +37,12 @@ class Graph{
 			var str = "";
 			for (var dstKey of dstKeys) {
 				var dstVal = srcVal.get(dstKey)
-				//console.log(dstVal);
-//				str += dstKey.name + ":" + dstVal.line + " " +  "\n origin : " + dstVal.origin.name + "\n";
 				str += "\tdestination : " + dstKey.name + ": line nbr : " + dstKey.line.number + " line name : " + dstKey.line.name +  "\n";
-				//str += dstKey.name + ":" + dstVal.line + " " +  "\n";
-			//	str += dstKey.name + ":" + dstVal.line + " " +  "\n";
 			}
 			or = "source : " + srcKey.name + ": line nbr : " + srcKey.line.number + " line name : " + srcKey.line.name + " -> "+  "\n" + str + "\n";
-			//if (!fs.existsSync('./output.json'))
-			fs.appendFileSync('./output.json', or);
-			console.log(srcKey.name + " -> " + str)
+			fs.appendFileSync('./output', or);
 		}
 	}	
-
-	/*
-	shortestPath(src, dst) {
-		var pq = new PriorityQueue()
-		pq.push(src)
-		while (ps.length == 0) {
-			curr = pq.pop()
-			adjs = this.edges.get(curr).keys()
-			for (var n of adjs) {
-				alt = n.cost + this.edges.get(curr).get(n).cost
-				if alt < 
-			}
-		}
-	}
-	*/
 }
 
 module.exports = Graph;
