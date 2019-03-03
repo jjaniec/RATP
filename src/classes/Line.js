@@ -7,6 +7,7 @@ module.exports.Line = class Line{
 		this.direction = obj.line.routes[1].direction.name
 		//console.log(this.direction)
 		this.number = obj.line.code;
+		this.color = obj.line.color;
 		if (obj.stop_points.length > 0)
 		{
 			this.firstStation = obj.stop_points[0].name;
