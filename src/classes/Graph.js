@@ -34,28 +34,31 @@ class Graph{
 	}
 
 	shortestPath(src, dst) {
-		var pq = new PriorityQueue({
+		let opened = new PriorityQueue({
 			comparator: (a, b) => b.cost - a.cost
 		})
-		src.cost = 0
-		pq.push(src)
+		let closed = new Map()
 
-		while (pq.length > 0) {
-			var curr = pq.pop()
-			if (curr == dst) {
-				break
-			}
-			curr.visited = true
+		src.cost = 0
+		opened.push(src)
+
+		while (opened.length > 0) {
+			let curr = opened.pop()
+
+			if (closed.get(curr) == true)
+				continue
+			closed.set(curr, true)
+
 			for (let [node, route] of this.edges.get(curr)) {
-				var alt = curr.cost + route.cost
-				//console.log(curr.name, node.name, node.line.number)
+				if (node == curr.prev) {
+					continue
+				}
+				let alt = curr.cost + route.cost
 				if (alt < node.cost) {
 					node.cost = alt
 					node.prev = curr
 				}
-				if (node.visited == false) {
-					pq.push(node)
-				}
+				opened.push(node)
 			}
 		}
 		this.printPath(dst)
@@ -64,7 +67,7 @@ class Graph{
 	printPath(dst) {
 		if (dst.prev)
 			this.printPath(dst.prev)
-		console.log(dst.name + ":" + dst.cost)
+		console.log(dst.name, "(" + dst.cost + ")", "\n\tline:", dst.line.number, dst.line.name)
 	}
 }
 

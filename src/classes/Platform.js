@@ -5,8 +5,13 @@ module.exports.Platform = class Platform {
 			this.line = line;
 			this.cost = Infinity
 			this.prev = null
-			this.visited = false
 			Platform.platformlist.push(this);
+		}
+		copy() {
+			let newPlatform = new Platform(this.name, this.line)
+			newPlatform.cost = this.cost
+			newPlatform.prev = this.prev
+			return newPlatform
 		}
 		getSameStationDifferentLine()
 		{
@@ -15,12 +20,12 @@ module.exports.Platform = class Platform {
 			});
 			return existing_platform;
 		}
-		getPlatformThroughName(name, lineName)
+		getPlatformThroughName(name)
 		{
 			let exist = Platform.platformlist.filter((val) => {
-				return val.name == name && val.line.name == lineName
+				return val.name == name
 			});
-			if (exist.length != 1) {
+			if (exist.length == 0) {
 				console.log("ERROR")
 			}
 			return exist[0]

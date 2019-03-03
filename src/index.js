@@ -29,17 +29,12 @@ const main = async () => {
 			oldPlatform = newPlatform;
 		}
 	}	
-	newGraph.printGraph();
+	let start = newPlatform.getPlatformThroughName("Hoche")
+	let end = newPlatform.getPlatformThroughName("Argentine")
+	console.log("start:", start.name, "\n\tline:", start.line.number, start.line.name)
+	console.log("end:", end.name, "\n\tline:", end.line.number, end.line.name)
 	console.log("\nShortest Path")
-	/*
-	let bercy = newPlatform.getPlatformThroughName("Bercy", "Saint-Lazare - Olympiades")
-	let lyon = newPlatform.getPlatformThroughName("Gare de Lyon", "Saint-Lazare - Olympiades")
-	newGraph.shortestPath(lyon, bercy);
-	*/
-	let bercy = newPlatform.getPlatformThroughName("Bercy", "Olympiades - Saint-Lazare")
-	//let lyon = newPlatform.getPlatformThroughName("Gare de Lyon", "Olympiades - Saint-Lazare")
-	let avron = newPlatform.getPlatformThroughName("Avron", "Nation - Porte Dauphine (Maréchal de Lattre de Tassigny)")
-	newGraph.shortestPath(bercy, avron);
+	newGraph.shortestPath(start, end);
 }
 
 main()
