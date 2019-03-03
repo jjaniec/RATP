@@ -20,15 +20,31 @@ const app = express();
 	client.routes = await loadDatafile('./routes.json', client.getRoutes)
 	client.schedules = await loadDatafile('./schedules.json', client.getSchedules)
 
-	app.get('/getStopPoints', (req, res) => {
+	app.use(function(req, res, next) {
+		res.header("Access-Control-Allow-Origin", "*");
+		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		next();
+	  });
+	  
+	app.get('/getStopPoints/', (req, res) => {
 		let rslt = Array();
 		client.stops.stop_points.forEach((item) => {
 			rslt.push(item.name)
 		})
 		res.send(JSON.stringify(rslt));
 	})
+	app.get("/merde", (req, res) => {
+		res.status(200).send("CA MARCHe");
+	})
+	app.get("/path/:start/:end", (req, res) => {
+		console.log(start);
+		console.log(end);
+		res.status(200).send("CA MARCHe");
+		
+	})
 	
 	app.get('/', (req, res) => {
+		console.log("aksdjhaksdhaksdhaksdhaskdjhaskd");
 		res.sendFile(path.join(__dirname, 'web', 'index.html'));
 	});
 	

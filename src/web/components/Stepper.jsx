@@ -44,6 +44,16 @@ function getStepContent(step) {
   }
 }
 
+function retActionContainers(index) {
+  if (index == 0)
+    return <Search id="step1" placeholderText="Start from: " type="departure" />
+  else if (index == 1)
+    return <Search id="step2" placeholderText="End at: " type="arrival" />
+  else if (index == 2)
+    return  <div>qlwk</div>
+    //<ResultCard id="step3" />
+}
+
 class VerticalLinearStepper extends React.Component {
   state = {
     activeStep: 0,
@@ -81,7 +91,7 @@ class VerticalLinearStepper extends React.Component {
               <StepContent>
                 <Typography>{getStepContent(index)}</Typography>
                 <div className={classes.actionsContainer}>
-                  <Search id="departure_search" />
+                  {retActionContainers(index)}
                   <div>
                     <Button
                       disabled={activeStep === 0}

@@ -11,7 +11,7 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
-
+import axios from 'axios';
 // function Search() {
 //   return (
 //     <React.Fragment>
@@ -1356,22 +1356,40 @@ const components = {
 };
 
 class Search extends React.Component {
-  state = {
-    departure: null,
-    arrival: null,
-  };
+  constructor(props) {
+    super(props);
+    //console.log(this.props)
+    this.state = {
+      type : this.props.type,
+      departure: null,
+      arrival: null,
+    };
+    this.handleChange = this.handleChange.bind(this)
+  }
 
-  handleChange = name => value => {
-    this.setState({
+  handleChange = name => async value => {
+    await this.setState({
       [name]: value,
     }, () => {
-      console.log(this.state.departure.value, "toto");
+      console.log(this.state.departure.value, "departure");
     }, () => {
-      console.log(this.state.arrival.value, "toto");
+      console.log(this.state.arrival.value, "arival");
     });
+    console.log(this.state.departure);
+    console.log(this.state.type);
+   // console.log(this.state.arrival);
+    if (!!this.state.departure && this.state.type == "arrival")
+    {
+      alert("eqw");
+      await axios.get("http://localhost:3000/merde").then(res => {
+          alert("eqw");
+          console.log(res);
+        });   
+    }
   };
 
   handleSubmit(event) {
+ 
     event.preventDefault();
   }
 
