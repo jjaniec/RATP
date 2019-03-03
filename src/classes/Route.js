@@ -13,7 +13,8 @@ class Route{
 		this.cost = getRouteSchedule(client, origin.line.number, origin.line.direction, origin.name, dest.name);
 		//console.log(this.cost)
 		this.line = origin.line;
-		this.minutesUntilMetro =  Math.floor(Math.random() * 10);	
+		if (origin.name == dest.name)	
+			this.cost = 5;
 	}
 }
 
