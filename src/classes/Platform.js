@@ -3,7 +3,15 @@ module.exports.Platform = class Platform {
 		constructor(name, line){
 			this.name = name;
 			this.line = line;
+			this.cost = Infinity
+			this.prev = null
 			Platform.platformlist.push(this);
+		}
+		copy() {
+			let newPlatform = new Platform(this.name, this.line)
+			newPlatform.cost = this.cost
+			newPlatform.prev = this.prev
+			return newPlatform
 		}
 		getSameStationDifferentLine()
 		{
@@ -12,7 +20,6 @@ module.exports.Platform = class Platform {
 			});
 			return existing_platform;
 		}
-	}
-
+}
 
 module.exports.Platform.platformlist = [];

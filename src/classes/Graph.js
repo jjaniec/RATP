@@ -1,5 +1,7 @@
 const Route = require("./Route");
 const fs	= require("fs");
+const PriorityQueue = require("priorityqueue")
+
 class Graph{
 	constructor() {
 		this.edges = new Map()
@@ -11,6 +13,7 @@ class Graph{
 		else
 			console.log("slkefjskfjwlefjelfkjselfjeslfjksflkjsf");
 	}
+
 	addEdgeBetweenSameStation(origin_platform, allSameStation){
 		if (allSameStation.length > 0)
 		{
@@ -21,6 +24,7 @@ class Graph{
 			}
 		}
 	}
+
 	addEdge(origin_platform, destination_platform) {
 		this.edges.get(origin_platform).set(destination_platform, new Route(origin_platform, destination_platform));
 	}
@@ -42,7 +46,47 @@ class Graph{
 			or = "source : " + srcKey.name + ": line nbr : " + srcKey.line.number + " line name : " + srcKey.line.name + " -> "+  "\n" + str + "\n";
 			fs.appendFileSync('./output', or);
 		}
-	}	
+	}
+
+	shortestPath(src, dst) {
+		let opened = new PriorityQueue({
+			comparator: (a, b) => b.cost - a.cost
+		})
+		let closed = new Map()
+
+		src.cost = 0
+		opened.push(src)
+
+		while (opened.length > 0) {
+			let curr = opened.pop()
+
+			if (closed.get(curr) == true)
+				continue
+			closed.set(curr, true)
+
+			for (let [node, route] of this.edges.get(curr)) {
+				if (node == curr.prev) {
+					continue
+				}
+				let alt = curr.cost + route.cost
+				if (alt < node.cost) {
+					node.cost = alt
+					node.prev = curr
+				}
+				opened.push(node)
+			}
+		}
+		this.printPath(dst)
+	}
+
+	printPath(dst) {
+		if (dst.prev)
+			this.printPath(dst.prev)
+		console.log(dst.name, "(" + dst.cost + ")", "\n\tline:", dst.line.number, dst.line.name)
+	}
+
+
+
 }
 
 module.exports = Graph;

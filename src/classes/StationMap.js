@@ -13,6 +13,16 @@ class StationMap {
 	{
 		this.edges.get(station).set(this.edges.get(station).size, platform);
 	}
+	findStationByName(name)
+	{
+		//this.edges.geddt(name
+		let stations = this.edges.keys();
+		for (let station of stations)
+		{
+			if (station.name == name)
+				return this.edges.get(station);
+		}
+	}
 	printStationMap()
 	{
 		let stations = this.edges.keys();
