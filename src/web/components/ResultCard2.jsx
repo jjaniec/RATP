@@ -1,3 +1,5 @@
+const axios = require('axios')
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -62,16 +64,19 @@ class NestedList extends React.Component {
 	let start = document.querySelector('#step1').value
 	let end = document.querySelector('#step2').value
 
-	/*
-		axios.get(`/getRoute?start=${start}&end=${end}`)
-		.then(resp => {
-			console.log(resp.data)
-			this.state.steps = [{label: "lol"}, {label: 'lal'}]
-		})
-		.catch(err => {
-			console.log(err.response)
-		})
-	*/
+	console.log(`Req ${start} - ${end}`)
+
+	axios.get(`/path/${start}/${end}`)
+	.then(resp => {
+		console.log(resp.data)
+//		this.state.steps = [{label: "lol"}, {label: 'lal'}]
+		this.state.steps = JSON.parse(resp.data)
+	})
+	.catch(err => {
+		console.log('lol c pa bien')
+		console.log(err.response)
+	})
+
 
   }
 
@@ -90,7 +95,7 @@ class NestedList extends React.Component {
       >
 	  {
 		this.state.data.map((item, index) => 
-			<ListItem button>
+			<ListItem key={item.time} button>
 				<ListItemIcon>
 					<SendIcon />
 				</ListItemIcon>

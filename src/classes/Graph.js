@@ -1,4 +1,5 @@
 const Route = require("./Route");
+const moment = require("moment")
 const fs	= require("fs");
 const PriorityQueue = require("priorityqueue")
 
@@ -75,35 +76,43 @@ class Graph{
 				opened.push(node)
 			}
 		}
-		//dst = this.removeDuplicateFromStartAndEnd(dst)
-		this.printPath(dst)
-	}
-	removeDuplicateFromStartAndEnd(dst){
-		let curr = dst
-		let end = true;
-		let start = true;
-		while (curr.prev && end) {
-			if (curr.prev.cost == curr.cost && curr.prev.name == curr.name)
-				dst = curr.prev;
-			else
-				end = false
-			curr = curr.prev
-		}
-		while (curr && start) {
-			if (curr.prev.cost == curr.cost && curr.prev.name == curr.name)
-				curr.prev = null
-			curr = curr.prev
-		}
-		return (dst);
+		return this.createJsonPath(dst);
 	}
 	printPath(dst) {
 		if (dst.prev)
 			this.printPath(dst.prev)
 		console.log(dst.name, "(" + dst.cost + ")", "\n\tline:", dst.line.number, dst.line.name)
 	}
-
-
-
+	createJsonPath(dst) {
+		let jsonPath = []
+		let time = moment()
+		let curr = dst
+		while (curr) {
+			let obj = this.createObject(curr, time)
+			jsonPath.unshift(obj)
+			curr = curr.prev
+		}
+		this.removeDuplicateStartEnd(jsonPath)
+		return jsonPath
+	}
+	createObject(curr, startTime) {
+		let obj = new Object()
+		obj.station = curr.name
+		obj.lineNumber = curr.line.number
+		obj.lineName = curr.line.name
+		let now = moment(startTime)
+		now.add(curr.cost, 'm');
+		obj.time = now.format("HH:mm")
+		return obj
+	}
+	removeDuplicateStartEnd(jsonPath) {
+		while (jsonPath.length >= 2 && jsonPath[0].station == jsonPath[1].station) {
+			jsonPath.shift()
+		}
+		while (jsonPath.length >= 2 && jsonPath[jsonPath.length - 1].station == jsonPath[jsonPath.length - 2].station) {
+			jsonPath.pop()
+		}
+	}
 }
 
 module.exports = Graph;

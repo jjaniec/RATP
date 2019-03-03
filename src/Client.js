@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-
+const editPath = require("./modifyJson");
 const navitia = require('./classes/navitia').default
 
 module.exports.client = new navitia()
@@ -11,6 +11,8 @@ async function loadDatafile(filename, callback) {
 		console.log(`Fetch ${filename}`)
 		let x = await callback()
 		fs.writeFileSync(filename, JSON.stringify(x, null, 4) , 'utf-8')
+		if (filename == "./routes.json")
+			x = await editPath.editJson();
 		return (x);
 	}
 	else

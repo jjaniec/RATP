@@ -9,6 +9,7 @@ const config = require('./../config.json');
 
 const getRouteSchedule = require('./getRouteSchedule').default
 const loadDatafile = require('./loadDataFile').default
+const findPath = require("./findPath");
 
 const app = express();
 
@@ -27,6 +28,13 @@ const app = express();
 		})
 		res.send(JSON.stringify(rslt));
 	})
+	app.get("/path/:start/:end", (req, res) => {
+        let json = findPath(req.params.start, req.params.end);
+		if (!!json["error"])
+			res.status(400).json(json);
+		else
+			res.status(200).json(json);
+    })
 	
 	app.get('/', (req, res) => {
 		res.sendFile(path.join(__dirname, 'web', 'index.html'));
