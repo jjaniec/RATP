@@ -75,9 +75,27 @@ class Graph{
 				opened.push(node)
 			}
 		}
+		dst = this.removeDuplicateFromStartAndEnd(dst)
 		this.printPath(dst)
 	}
-
+	removeDuplicateFromStartAndEnd(dst){
+		let curr = dst
+		let end = true;
+		let start = true;
+		while (curr.prev && end) {
+			if (curr.prev.cost == curr.cost && curr.prev.name == curr.name)
+				dst = curr.prev;
+			else
+				end = false
+			curr = curr.prev
+		}
+		while (curr && start) {
+			if (curr.prev.cost == curr.cost && curr.prev.name == curr.name)
+				curr.prev = null
+			curr = curr.prev
+		}
+		return (dst);
+	}
 	printPath(dst) {
 		if (dst.prev)
 			this.printPath(dst.prev)
