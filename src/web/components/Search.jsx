@@ -1356,19 +1356,21 @@ const components = {
 };
 
 class Search extends React.Component {
-  state = {
-    departure: null,
-    arrival: null,
-  };
+	constructor(props) {
+		super(props);
+		this.state = {
+			divname: props.step,
+			value: null
+		}
+		this.handleChange = this.handleChange.bind(this)
+	}
 
-  handleChange = name => value => {
+  handleChange = name => value_ => {
     this.setState({
-      [name]: value,
-    }, () => {
-      console.log(this.state.departure.value, "toto");
-    }, () => {
-      console.log(this.state.arrival.value, "toto");
-    });
+      value: value_,
+	})
+	console.log(`Update ${this.state.divname} id - value ${value_.value}`)
+	document.querySelector(`#${this.state.divname}`).value = value_.value
   };
 
   handleSubmit(event) {
@@ -1397,8 +1399,8 @@ class Search extends React.Component {
             styles={selectStyles}
             options={suggestions}
             components={components}
-            value={this.state.departure}
-            onChange={this.handleChange('departure')}
+            value={this.state.value}
+            onChange={this.handleChange()}
             placeholder={this.props.placeholderText}
             isClearable
           />

@@ -19,6 +19,9 @@ class App extends Component {
 	render() {
 		return (
 			<div id="app">
+				<span id="step1" class="value_hidden"></span>
+				<span id="step2" class="value_hidden"></span>
+				<span id="step3" class="value_hidden"></span>
 				<AppBar />
 				<Stepper />
 			</div>

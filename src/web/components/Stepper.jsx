@@ -10,6 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import Search from './Search'
+import ResultCard from './ResultCard'
+import ResultCard2 from './ResultCard2'
+
 
 const styles = theme => ({
   root: {
@@ -43,6 +46,15 @@ function getStepContent(step) {
       return 'Unknown step';
   }
 }
+
+  function retActionContainers(index) {
+    if (index == 0)
+      return <Search id="step1" step="step1" placeholderText="Start from: " />
+    else if (index == 1)
+      return <Search id="step2" step="step2" placeholderText="End at: " />
+    else if (index == 2)
+      return <ResultCard2 id="step3" />
+  }
 
 class VerticalLinearStepper extends React.Component {
   state = {
@@ -81,7 +93,7 @@ class VerticalLinearStepper extends React.Component {
               <StepContent>
                 <Typography>{getStepContent(index)}</Typography>
                 <div className={classes.actionsContainer}>
-                  <Search id="departure_search" />
+                  {retActionContainers(index)}
                   <div>
                     <Button
                       disabled={activeStep === 0}
@@ -106,7 +118,7 @@ class VerticalLinearStepper extends React.Component {
         </Stepper>
         {activeStep === steps.length && (
           <Paper square elevation={0} className={classes.resetContainer}>
-            <Typography>All steps completed - you&apos;re finished</Typography>
+            <Typography>Search for a new journey</Typography>
             <Button onClick={this.handleReset} className={classes.button}>
               Reset
             </Button>
