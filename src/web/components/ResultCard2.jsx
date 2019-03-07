@@ -32,26 +32,7 @@ class NestedList extends React.Component {
 		super()
 		this.state = {
 		  open: true,
-		  steps: [
-			  {
-				  station: "St 223lazare",
-				  lineNumber: 1,
-				  lineName: "St deq2eenis",
-				  time: "22:45"
-			  },
-			  {
-				  station: "St lazare",
-				  lineNumber: 13,
-				  lineName: "St denis",
-				  time: "20:45"
-			  },
-			  {
-				  station: "St ldawdawazare",
-				  lineNumber: "15",
-				  lineName: "St dawdenis",
-				  time: "20:00"
-			  }
-		  ]
+		  steps: []
 		};
 		this.fmtItem = this.fmtItem.bind(this)
 	}
